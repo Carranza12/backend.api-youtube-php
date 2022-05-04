@@ -2,11 +2,12 @@
    require("videosData.php");
     $request=str_replace("/apirest-youtuber/","",$_SERVER['REQUEST_URI']);
    
-    
+   
     switch($_SERVER['REQUEST_METHOD']){
         case 'GET':
-            if($request=='/api/v1/videosPreview'){
-                print_r( obtenerVideoPreview());
+            
+            if($request=='api/v1/videosPreview?nextPage='.$_GET['nextPage']){
+                print_r( siguientePaginaPreview($_GET['nextPage']));
                 http_response_code(200);
                 
             }
@@ -32,9 +33,10 @@
                 print_r( obtenerVideosPorAlfabeto());
                 http_response_code(200);
             }
-           
+          
            
             break;
+          
     }
 
        
