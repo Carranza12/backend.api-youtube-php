@@ -1,6 +1,7 @@
 <?php
    require("videosData.php");
-    $request=str_replace("/apirest-youtuber/","",$_SERVER['REQUEST_URI']);
+   require("paginacion.php");
+    $request=str_replace("/Backend_PHP/backend.api-youtube-php/","",$_SERVER['REQUEST_URI']);
    
     
     switch($_SERVER['REQUEST_METHOD']){
@@ -33,9 +34,14 @@
                 http_response_code(200);
             }
            
-           
+           if($request=='api/v1/videos/paginacion'){
+               print_r(conseguirToken());
+               http_response_code(200);
+           }
             break;
     }
+
+
 
        
     
