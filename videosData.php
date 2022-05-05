@@ -88,29 +88,10 @@
                 function obtenerVideosRecientes(){
                     $API_KEY="AIzaSyADBdMwnFbN8YMPqTAEzR0wMdF_o4_VaYA";
                     $CHANNEL_ID="UC3QuZuJr2_EOUak8bWUd74A";
-                    $MAX_RESULTS=50;
+                    $MAX_RESULTS=10;
                     $arrayVideoPreview=array();
                     $ListaIds=json_decode(file_get_contents('https://www.googleapis.com/youtube/v3/search?channelId='.$CHANNEL_ID.'&part=snippet&type=video&maxResults='.$MAX_RESULTS.'&key='.$API_KEY.'&order=date'));
-                    foreach($ListaIds->items as $item){
-                
-                        $videoPreview= new stdClass();
-                        $VideoId=$item->id->videoId;
-                        $nombreDelVideo=$item->snippet->title;
-                        $autorDelVideo=$item->snippet->channelTitle;
-                        $fechaDeSubida=$item->snippet->publishedAt;
-                        $descripcionDelVideo=$item->snippet->description;
-                        $miniaturaDelVideo=$item->snippet->thumbnails->high->url;
-                    
-                        $videoPreview->nombre=$nombreDelVideo;
-                        $videoPreview->id=$VideoId;
-                        $videoPreview->autor=$autorDelVideo;
-                        $videoPreview->fecha=$fechaDeSubida;
-                        $videoPreview->descripcion=$descripcionDelVideo;
-                        $videoPreview->miniatura=$miniaturaDelVideo;
-    
-                        array_push($arrayVideoPreview,$videoPreview);
-                    }
-                    return json_encode($arrayVideoPreview);
+                    GetPetition($ListaIds);
                     }
                 function obtenerVideosPorPopularidad(){
                     $API_KEY="AIzaSyADBdMwnFbN8YMPqTAEzR0wMdF_o4_VaYA";
