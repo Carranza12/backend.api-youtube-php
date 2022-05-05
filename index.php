@@ -17,20 +17,20 @@
                     print_r(obtenerVideoDetails($videoId));
                 }
             }
-            if($request=='api/v1/videos/recientes'){
-                print_r( obtenerVideosRecientes());
+            if($request=='api/v1/videos/reciente?nextPage='.$_GET['nextPage']){
+                print_r( obtenerVideosRecientes($_GET['nextPage']));
                 http_response_code(200);
             }
-            if($request=='api/v1/videos/populares'){
-                print_r( obtenerVideosPorPopularidad());
+            if($request=='api/v1/videos/populares?nextPage='.$_GET['nextPage']){
+                print_r( obtenerVideosPorPopularidad($_GET['nextPage']));
                 http_response_code(200);
             }
-            if($request=='api/v1/videos/valoracion'){
-                print_r( obtenerVideosPorValoracion());
+            if($request=='api/v1/videos/valoracion?nextPage='.$_GET['nextPage']){
+                print_r( obtenerVideosPorValoracion($_GET['nextPage']));
                 http_response_code(200);
             }
-            if($request=='api/v1/videos/abededario'){
-                print_r( obtenerVideosPorAlfabeto());
+            if($request=='api/v1/videos/abededario?nextPage='.$_GET['nextPage']){
+                print_r( obtenerVideosPorAlfabeto($_GET['nextPage']));
                 http_response_code(200);
             }
           

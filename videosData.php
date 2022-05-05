@@ -85,103 +85,58 @@
                 }
 
 
-                function obtenerVideosRecientes(){
+                function obtenerVideosRecientes($nextPage){
                     $API_KEY="AIzaSyADBdMwnFbN8YMPqTAEzR0wMdF_o4_VaYA";
                     $CHANNEL_ID="UC3QuZuJr2_EOUak8bWUd74A";
                     $MAX_RESULTS=10;
-                    $arrayVideoPreview=array();
-                    $ListaIds=json_decode(file_get_contents('https://www.googleapis.com/youtube/v3/search?channelId='.$CHANNEL_ID.'&part=snippet&type=video&maxResults='.$MAX_RESULTS.'&key='.$API_KEY.'&order=date'));
-                    GetPetition($ListaIds);
+                    
+                    $ListaIds=json_decode(file_get_contents('https://www.googleapis.com/youtube/v3/search?channelId='.$CHANNEL_ID.'&part=snippet&type=video&maxResults='.$MAX_RESULTS.'&key='.$API_KEY.'&order=date&pageToken='.$nextPage));
+                    if(!$ListaIds){
+                        $Lista=json_decode(file_get_contents('https://www.googleapis.com/youtube/v3/search?channelId='.$CHANNEL_ID.'&part=snippet&type=video&maxResults='.$MAX_RESULTS.'&key='.$API_KEY.'&order=date'));
+                        return GetPetition($Lista);
+                    }else{
+                        return GetPetition($ListaIds);
                     }
-                function obtenerVideosPorPopularidad(){
+                    }
+                function obtenerVideosPorPopularidad($nextPage){
                     $API_KEY="AIzaSyADBdMwnFbN8YMPqTAEzR0wMdF_o4_VaYA";
                     $CHANNEL_ID="UC3QuZuJr2_EOUak8bWUd74A";
-                    $MAX_RESULTS=50;
-                    $arrayVideoPreview=array();
-                    $ListaIds=json_decode(file_get_contents('https://www.googleapis.com/youtube/v3/search?channelId='.$CHANNEL_ID.'&part=snippet&type=video&maxResults='.$MAX_RESULTS.'&key='.$API_KEY.'&order=viewCount'));
+                    $MAX_RESULTS=10;
                     
-                    foreach($ListaIds->items as $item){
-                
-                        $videoPreview= new stdClass();
-                        $VideoId=$item->id->videoId;
-                        $nombreDelVideo=$item->snippet->title;
-                        $autorDelVideo=$item->snippet->channelTitle;
-                        $fechaDeSubida=$item->snippet->publishedAt;
-                        $descripcionDelVideo=$item->snippet->description;
-                        $miniaturaDelVideo=$item->snippet->thumbnails->high->url;
-                    
-                        $videoPreview->nombre=$nombreDelVideo;
-                        $videoPreview->id=$VideoId;
-                        $videoPreview->autor=$autorDelVideo;
-                        $videoPreview->fecha=$fechaDeSubida;
-                        $videoPreview->descripcion=$descripcionDelVideo;
-                        $videoPreview->miniatura=$miniaturaDelVideo;
-    
-                        array_push($arrayVideoPreview,$videoPreview);
+                    $ListaIds=json_decode(file_get_contents('https://www.googleapis.com/youtube/v3/search?channelId='.$CHANNEL_ID.'&part=snippet&type=video&maxResults='.$MAX_RESULTS.'&key='.$API_KEY.'&order=viewCount&pageToken='.$nextPage));
+                     if(!$ListaIds){
+                        $Lista=json_decode(file_get_contents('https://www.googleapis.com/youtube/v3/search?channelId='.$CHANNEL_ID.'&part=snippet&type=video&maxResults='.$MAX_RESULTS.'&key='.$API_KEY.'&order=viewCount'));
+                        return GetPetition($Lista);
+                    }else{
+                        return GetPetition($ListaIds);
                     }
-                    return json_encode($arrayVideoPreview);
+                    
                 }
-                function obtenerVideosPorValoracion(){
+                function obtenerVideosPorValoracion($nextPage){
                     $API_KEY="AIzaSyADBdMwnFbN8YMPqTAEzR0wMdF_o4_VaYA";
                     $CHANNEL_ID="UC3QuZuJr2_EOUak8bWUd74A";
-                    $MAX_RESULTS=50;
-                    $arrayVideoPreview=array();
-                    $ListaIds=json_decode(file_get_contents('https://www.googleapis.com/youtube/v3/search?channelId='.$CHANNEL_ID.'&part=snippet&type=video&maxResults='.$MAX_RESULTS.'&key='.$API_KEY.'&order=rating'));
-                    
-                    foreach($ListaIds->items as $item){
+                    $MAX_RESULTS=10;
                 
-                        $videoPreview= new stdClass();
-                        $VideoId=$item->id->videoId;
-                        $nombreDelVideo=$item->snippet->title;
-                        $autorDelVideo=$item->snippet->channelTitle;
-                        $fechaDeSubida=$item->snippet->publishedAt;
-                        $descripcionDelVideo=$item->snippet->description;
-                        $miniaturaDelVideo=$item->snippet->thumbnails->high->url;
-                    
-                        $videoPreview->nombre=$nombreDelVideo;
-                        $videoPreview->id=$VideoId;
-                        $videoPreview->autor=$autorDelVideo;
-                        $videoPreview->fecha=$fechaDeSubida;
-                        $videoPreview->descripcion=$descripcionDelVideo;
-                        $videoPreview->miniatura=$miniaturaDelVideo;
-    
-                        array_push($arrayVideoPreview,$videoPreview);
+                    $ListaIds=json_decode(file_get_contents('https://www.googleapis.com/youtube/v3/search?channelId='.$CHANNEL_ID.'&part=snippet&type=video&maxResults='.$MAX_RESULTS.'&key='.$API_KEY.'&order=rating&pageToken='.$nextPage));
+                     if(!$ListaIds){
+                        $Lista=json_decode(file_get_contents('https://www.googleapis.com/youtube/v3/search?channelId='.$CHANNEL_ID.'&part=snippet&type=video&maxResults='.$MAX_RESULTS.'&key='.$API_KEY.'&order=rating'));
+                        return GetPetition($Lista);
+                    }else{
+                        return GetPetition($ListaIds);
                     }
-                    return json_encode($arrayVideoPreview);
+                   
                 }
-                function obtenerVideosPorAlfabeto(){
+                function obtenerVideosPorAlfabeto($nextPage){
                     $API_KEY="AIzaSyADBdMwnFbN8YMPqTAEzR0wMdF_o4_VaYA";
                     $CHANNEL_ID="UC3QuZuJr2_EOUak8bWUd74A";
-                    $MAX_RESULTS=50;
-                    $arrayVideoPreview=array();
-                    $ListaIds=json_decode(file_get_contents('https://www.googleapis.com/youtube/v3/search?channelId='.$CHANNEL_ID.'&part=snippet&type=video&maxResults='.$MAX_RESULTS.'&key='.$API_KEY.'&order=title'));
-                    
-                    foreach($ListaIds->items as $item){
-                
-                        $videoPreview= new stdClass();
-                        $VideoId=$item->id->videoId;
-                        $nombreDelVideo=$item->snippet->title;
-                        $autorDelVideo=$item->snippet->channelTitle;
-                        $fechaDeSubida=$item->snippet->publishedAt;
-                        $descripcionDelVideo=$item->snippet->description;
-                        $miniaturaDelVideo=$item->snippet->thumbnails->high->url;
-                    
-                        $videoPreview->nombre=$nombreDelVideo;
-                        $videoPreview->id=$VideoId;
-                        $videoPreview->autor=$autorDelVideo;
-                        $videoPreview->fecha=$fechaDeSubida;
-                        $videoPreview->descripcion=$descripcionDelVideo;
-                        $videoPreview->miniatura=$miniaturaDelVideo;
-    
-                        array_push($arrayVideoPreview,$videoPreview);
+                    $MAX_RESULTS=10;
+                    $ListaIds=json_decode(file_get_contents('https://www.googleapis.com/youtube/v3/search?channelId='.$CHANNEL_ID.'&part=snippet&type=video&maxResults='.$MAX_RESULTS.'&key='.$API_KEY.'&order=title&pageToken='.$nextPage));
+                    if(!$ListaIds){
+                        $Lista=json_decode(file_get_contents('https://www.googleapis.com/youtube/v3/search?channelId='.$CHANNEL_ID.'&part=snippet&type=video&maxResults='.$MAX_RESULTS.'&key='.$API_KEY.'&order=title'));
+                        return GetPetition($Lista);
+                    }else{
+                        return GetPetition($ListaIds);
                     }
-                    return json_encode($arrayVideoPreview);
                 }
-               
-
-
-
-
-        
-            
+                      
 ?>
